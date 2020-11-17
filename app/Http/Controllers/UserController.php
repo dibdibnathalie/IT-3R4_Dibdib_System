@@ -18,6 +18,7 @@
         $this->request = $request;
         }
 
+        //getting all users from database
         public function getUsers()
         {
         $user = DB::connection('mysql')->select("SELECT * FROM tbluser");
@@ -25,6 +26,7 @@
         return $this->successResponse($user);
         }
 
+        //
         public function index()
         {
             $user = User::all();
@@ -94,7 +96,7 @@
 
             $user = User::where('id', $id)->first();
 
-            if ($users)
+            if ($user)
             {
                 $user->fill($request->all());
 
@@ -104,7 +106,7 @@
                 }      
 
                 $user->save();
-                return $this->successResponse($users);
+                return $this->successResponse($user);
             }   
             {
                 return $this->errorResponse('User ID Does Not Exist', Response::HTTP_NOT_FOUND);
