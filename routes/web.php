@@ -20,11 +20,16 @@ $router->get('/', function () use ($router) {
 // unsecure routes
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/users',['uses' => 'UserController@getUsers']);
+    
 });
 
-$router->get('/users', 'UserController@index');
+$router->get('/users', 'UserController@index'); //show all users
 $router->post('/users', 'UserController@add'); //add new user
 $router->get('/users/{id}', 'UserController@show'); //specifically gonna get user by id
 $router->put('/users/{id}', 'UserController@update'); //update user
 $router->patch('/users/{id}', 'UserController@update'); //update user
 $router->delete('/users/{id}', 'UserController@delete'); //delete user
+
+
+$router->get('login', 'UserController@showLogIn');
+$router->post('result', 'UserController@result');

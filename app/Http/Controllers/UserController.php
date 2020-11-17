@@ -20,15 +20,39 @@
 
         public function getUsers()
         {
-        $users = DB::connection('mysql')->select("SELECT * FROM tbluser");
+        $user = DB::connection('mysql')->select("SELECT * FROM tbluser");
         //return response()->json($users,200);
-        return $this->successResponse($users);
+        return $this->successResponse($user);
         }
 
         public function index()
         {
-            $users = User::all();
-            return $this->successResponse($users);
+            $user = User::all();
+            return $this->successResponse($user);
+        }
+
+        public function showLogIn()
+        {
+            return view('login');
+        }
+        
+        public function result()
+        {        
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $user = app('db')->select("SELECT * FROM tbluser WHERE username='$username' AND password='$password'");
+        
+            if(empty($user))
+            {
+                echo '<script>alert("Invalid Input!")</script>';
+                return view('login');
+            }
+            else
+            {
+                echo '<script>alert("Succesfully Logged In!")</script>';
+                return view('login');
+            }
         }
 
         //add user function
@@ -40,18 +64,18 @@
             ];
 
             $this->validate($request, $rules);
-            $users = User::create($request->all());
-            return $this->successResponse($users, Response::HTTP_CREATED);
+            $user = User::create($request->all());
+            return $this->successResponse($user, Response::HTTP_CREATED);
         }
 
         //specific user search function
         public function show($id)
         {
             //$user = User::findOrFail($id);
-            $users = User::where('id', $id)->first();
-            if($users)
+            $user = User::where('id', $id)->first();
+            if($user)
             {
-            return $this->successResponse($users); 
+            return $this->successResponse($user); 
             }
             else
             {
@@ -68,18 +92,18 @@
 
             $this->validate($request, $rules);
 
-            $users = User::where('id', $id)->first();
+            $user = User::where('id', $id)->first();
 
             if ($users)
             {
-                $users->fill($request->all());
+                $user->fill($request->all());
 
-                if ($users->isCLean())
+                if ($user->isCLean())
                 {
                     return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
                 }      
 
-                $users->save();
+                $user->save();
                 return $this->successResponse($users);
             }   
             {
@@ -92,13 +116,13 @@
         public function delete($id)
         {
             $users = User::where('id', $id)->first();
-            if($users)
+            if($user)
             {
-                $users->delete();
-                return $this->successResponse($users);
+                $user->delete();
+                return $this->successResponse($user);
             }
             {
-                return $this->errorRespnse('UserID Does Not Exists', Response::HTTP_NOT_FOUND);
+                return $this->errorResponse('UserID Does Not Exists', Response::HTTP_NOT_FOUND);
             }
         }
     }

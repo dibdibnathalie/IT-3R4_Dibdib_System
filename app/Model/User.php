@@ -10,7 +10,7 @@
       
       // column/fields of the table
       protected $fillable = [
-      'id','username', 'password'
+      'username', 'password'
       ];
 
       public $timestamps = false;
