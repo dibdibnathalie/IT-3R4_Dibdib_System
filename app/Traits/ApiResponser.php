@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Traits;
+namespace App\Traits;
 
 use Illuminate\Http\Response;
 
