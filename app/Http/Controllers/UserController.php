@@ -4,7 +4,7 @@
     
     use Illuminate\Http\Response;
     use Illuminate\Http\Request;
-    use App\Model\Traits\ApiResponser;
+    use App\Traits\ApiResponser;
     use App\Model\User;
     use DB;
 
@@ -117,7 +117,7 @@
 
         public function delete($id)
         {
-            $users = User::where('id', $id)->first();
+            $user = User::where('id', $id)->first();
             if($user)
             {
                 $user->delete();
