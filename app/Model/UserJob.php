@@ -3,7 +3,7 @@
 
    use Illuminate\Database\Eloquent\Model;
 
-   class User extends Model
+   class UserJob extends Model
    {
       //name of table
       protected $table = 'tbluser';

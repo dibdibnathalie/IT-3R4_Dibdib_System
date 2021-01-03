@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
     
+    use App\Model\UserJob; 
     use Illuminate\Http\Response;
     use Illuminate\Http\Request;
     use App\Traits\ApiResponser;
@@ -62,10 +63,14 @@
         {
             $rules = [ 
                 'username' => 'required|max:20', 
-                'password' => 'required|max:20'
+                'password' => 'required|max:20',
+                'job_id' => 'required|numeric|min:1|not_in:0',
             ];
 
             $this->validate($request, $rules);
+
+            //validate if job_id is found in the table tbluserjob
+            $userjob = UserJob::findOrFail($request->job_id);
             $user = User::create($request->all());
             return $this->successResponse($user, Response::HTTP_CREATED);
         }
@@ -89,11 +94,14 @@
         {
             $rules = [
                 'username' => 'max:20',
-                'password' => 'max:20'
+                'password' => 'max:20',
+                'job_id' => 'required|numeric|min:1|not_in:0',
             ];
 
             $this->validate($request, $rules);
 
+            // validate if Jobid is found in the table tbluserjob
+            $userjob = UserJob::findOrFail($request->job_id);
             $user = User::where('id', $id)->first();
 
             if ($user)

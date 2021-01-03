@@ -18,10 +18,9 @@ $router->get('/', function () use ($router) {
 });
 
 // unsecure routes
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('/users',['uses' => 'UserController@getUsers']);
+//$router->group(['prefix' => 'api'], function () use ($router) {
     
-});
+
 
 $router->get('/users', 'UserController@index'); //show all users
 $router->post('/users', 'UserController@add'); //add new user
@@ -33,3 +32,9 @@ $router->delete('/users/{id}', 'UserController@delete'); //delete user
 
 $router->get('login', 'UserController@showLogIn');
 $router->post('result', 'UserController@result');
+
+//user job routes
+$router->get('/usersjob', 'UserJobController@index');
+$router->get('/usersjob/{id}', 'UserJobController@show'); // get user by id
+
+//});
